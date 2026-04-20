@@ -7,7 +7,7 @@
 % The figure includes the following subpanels:
 %   - cluster-averaged variables
 %
-%             Author: Tianyu Zhou and Yun Li, UDel, 11/25/2025
+%             Author: Tianyu Zhou and Yun Li, UDel, 04/15/2026
 
 clc; clear; close all; info_params
 %=====================================================
@@ -30,11 +30,37 @@ load(fPCA); PCAVARS = ClsPCA.PCAVARS;
 load(fsens);
 idd(1) = find(~cellfun('isempty',strfind(string(sens.desc3),'25'))); % run of 25% quantile error added
 idd(2) = find(~cellfun('isempty',strfind(string(sens.desc3),'75'))); % run of 75% quantile error added
+% detrend carbon-related variables
+varD = {'dPow','dFCO2eff','dFCO2int'};
+for kv = 1:length(varD); var=varD{kv};
+  vid = find(strcmp(PCAVARS(:,1),var(2:end)));                       % ID of original variable
+  PCAVARS(end+1,1) = {var};                                          % append variable to param list
+  ClsPCA.input(:,end+1,:) = detrend(ClsPCA.input(:,vid,:));          % detrend
+end
+
+%###################
+%## disp var corr ##
+%###################
+varA = {'Pow'    ,'dPow'    ,'FCO2eff','dFCO2eff'};
+varB = {'FCO2int','dFCO2int','FCO2int','dFCO2int'};
+disp('(r,p-val) between variables for each subregion:')
+disp(repmat('-',[1 58]))
+disp('# Pow-Fint     dPow-dFint    FCO2eff-Fint  dFCO2eff-dFint')
+for kc = 1:3
+  for kK = 1:length(varA)
+    [r,p]=corr(ClsPCA.input(:,strcmp(PCAVARS(:,1),varA{kK}),kc),...
+               ClsPCA.input(:,strcmp(PCAVARS(:,1),varB{kK}),kc));
+    if kK==1; desc=sprintf('%.i (%.2f,%.e)',kc,r,p);
+    else;     desc=[desc sprintf(' (%5.2f,%.e)',r,p)];
+    end
+  end; clear kK
+  disp(desc)
+end; clear kc
 
 %#############
 %## Tseries ##
 %#############
-for kv = 1:length(PCAVARS); var = PCAVARS{kv,1};
+for kv = 1:length(PCAVARS)-3; var = PCAVARS{kv,1};
   ylims = PCAVARS{kv,2};
   axes('pos',[fgxp+mod(kv-1,ncol)*fgdw fgyp-(ceil(kv/ncol)-1)*fgdh fgwp fghp]); hold on; box on
   for kc = 1:3

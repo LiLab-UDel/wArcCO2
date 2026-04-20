@@ -7,17 +7,17 @@
 % The figure includes the following subpanels:
 %   - (a-c) PCA results for each subregion
 %
-%             Author: Tianyu Zhou and Yun Li, UDel, 11/23/2025
+%             Author: Tianyu Zhou and Yun Li, UDel, 03/22/2026
 
 clc; clear; close all; info_params
 %================================================
 % Edit the following based on user's purpose
-isfig=1; ffig = [fdir_MSfig 'fig8_PCA_8var'];
+isfig=0; ffig = [fdir_MSfig 'fig8_PCA_8var'];
 %================================================
 %#####################
 %## figure settings ##
 %#####################
-fgx = 0.00; fgw = 0.37; fgdw = fgw-0.04;
+fgx = 0.00; fgw = 0.365; fgdw = fgw-0.03;
 fgy = 0.40; fgh = fgw;
 radj = 1.15; cff_sc = 4; fsize = 8;
 lims = [-1 1]*6.5; ticks = -10:2:10;

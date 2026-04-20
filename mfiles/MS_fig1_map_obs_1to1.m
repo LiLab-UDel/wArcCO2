@@ -10,7 +10,7 @@
 %   - (c) 1:1 plot for training
 %   - (d) 1:1 plot for testing
 %
-%             Author: Tianyu Zhou and Yun Li, UDel, 11/23/2025
+%             Author: Tianyu Zhou and Yun Li, UDel, 03/21/2026
 
 clc; clear; close all; info_params
 %=======================================================
@@ -29,7 +29,7 @@ pclims = [100 450]; pcticks = 100:50:500;
 fgx = 0.08; fgw = 0.44; fgdx = 0.05;
 fgy = 0.13; fgh = 0.18;
 color_hist = [1 1 1].*0.9;       % histogram color
-hlims = [1.5 4.5]; hticks = 2:4; % histogram lims and ticks
+hlims = [1.5 4.55]; hticks = 2:4;% histogram lims and ticks
 cff = 0.1;                       % streching cff for the additional y-axis
 % 1:1 plots
 fgxp = 0.60; fgwp = 0.35; fgdh2 = fgwp+0.03;
@@ -80,7 +80,7 @@ contour(px,py,mgrid.mask,[1 1]*0.99,'color','k') % coastal lines
 colormap(ax,cmap_adj); caxis(clims_adj)          % adjusted colorbar and colormap for bathymetry
 hh = set_wAO_map(1,1); set([hh.tlt;hh.tlg],'fontsize',fsize-1.5)
 set(hh.hp,'facecolor',color_land)
-text(-200,-2800,['\itn\rm\bf = ' num2str(size(dt,1),'%.i')],'fontsize',fsize+4,'fontweight','bold')
+text(-200,-2800,['\itn\rm\bf = ' fun_ndesc(size(dt,1))],'fontsize',fsize+4,'fontweight','bold')
 text(-1100,-1300,plabels{1},'fontsize',fsize+2,'fontweight','bold')
 hco = colorbar('position',[fgxm+0.15 fgym+0.31 0.015 0.25]);
 title(hco,'Depth (m)','fontsize',fsize-1)
@@ -114,7 +114,7 @@ text(-812,-2922,'Bering Strait','fontsize',fsize-3,'rotation', 70,'hor','left','
 %###############
 % histogram
 axes('pos',[fgx fgy fgw fgh*0.6],'yaxisloc','right'); hold on
-hb = bar(x,log10(N(idx)+1),'facecolor',color_hist,'edgecolor','none');
+hb = bar(x,log10(N(idx)+1),'facecolor',color_hist,'edgecolor',[1 1 1]*0.3);
 set(gca,'fontsize',fsize-1,'layer','top',...
     'xlim',xlims,'xtick',x     ,'xticklabel',num2str(obs_yrs(idx)'-2000,'%.2i'),...
     'ylim',hlims,'ytick',hticks,'yticklabel',num2str(hticks','10^%.i')); xtickangle(0);
@@ -167,7 +167,7 @@ for kK = 1:2; tmp = dt(dt.flag==kK-1,:);
   % stats
   [r,p] = corr(tmp.pCO2_obs,tmp.pCO2_mod);
   RMSD = std(tmp.pCO2_obs-tmp.pCO2_mod);
-  stats = {['\itn\rm=' num2str(size(tmp,1),'%.i')],...
+  stats = {['\itn\rm=' fun_ndesc(size(tmp,1))],...
            ['\itR\rm^2=' num2str(r.^2     ,'%.2f')],...
            num2str(RMSD       ,'RMSD=%.2f')};
   % mod-obs 1:1 plot
@@ -206,4 +206,4 @@ disp(num2str([ncut npct],'extreme n = %.i, %.2f percent of total'))
 %#################
 %## save figure ##
 %#################
-if isfig; print('-dpng','-r400',ffig); print('-dpng','-r400',ffig);end
+if isfig; print('-dpng','-r400',ffig); print('-dpng','-r400',ffig); end

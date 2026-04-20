@@ -8,7 +8,7 @@
 %   - (a-c) UCO2 std ratio between sensitivity and baseline runs
 %   - (d-f) UCO2 RMSD normalized against std of baseline run
 %
-%             Author: Tianyu Zhou and Yun Li, UDel, 11/25/2025
+%             Author: Tianyu Zhou and Yun Li, UDel, 04/13/2026
 
 clc; clear; close all; info_params
 %======================================================
@@ -43,7 +43,7 @@ for kr = 1:length(idd)
   if strfind(desc,'DSR')
     desc = 'no ice-related predictors';
   elseif strfind(desc,'bbp')
-    desc = 'no \itb\rm_{bp} history';
+    desc = 'no biotic uptake history';
   else
     desc = 'no wind history';
   end

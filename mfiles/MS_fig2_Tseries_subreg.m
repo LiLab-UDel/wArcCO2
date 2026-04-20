@@ -8,7 +8,7 @@
 %   - (a-c) monthly pCO2 obs vs mod for subregions
 %   - (d-f) yearly modeled delta pCO2, carbon uptake, open water area 
 %
-%             Author: Tianyu Zhou and Yun Li, UDel, 11/25/2025
+%             Author: Tianyu Zhou and Yun Li, UDel, 03/08/2026
 
 clc; clear; close all; info_params
 %=============================================================
@@ -58,8 +58,8 @@ for kr = 1:3  % three subregions
   plot(xm2m,OUY.pCO2_obsR(OUY.cls==kr,tid),'ko','markerfacecolor','none','markersize',2)
   plot(xm2m,OUY.pCO2_modR(OUY.cls==kr,tid),'k-','linewidth',1)
   plot(xticks(1:end-1),OUY.y2y.pCO2airavg(OUY.cls==kr,yrid),'--','linewidth',1,'color',color_air)
-  text(xlims(1)+0.70*diff(xlims),plims(2)-0.12*diff(plims),'atmospheric \itp\rmCO_2',...
-       'hor','lef','ver','top','fontsize',fsize-1,'rot',4,'color',color_air)
+  text(xlims(1)+0.70*diff(xlims),plims(2)-0.12*diff(plims),'atmospheric \itp\rm\bfCO_2',...
+       'hor','lef','ver','top','fontsize',fsize-1,'fontweight','bold','rot',4,'color',color_air./1.5)
   text(xlims(1)+0.03*diff(xlims),plims(2)-0.04*diff(plims),[plabels{kr} ' ' OUY.srnms{kr}],...
        'hor','lef','ver','top','fontsize',fsize,'fontweight','bold')
   if kr==1; text(xlims(1),plims(2)+0.05*diff(plims),mylabel,...  % variable label
@@ -99,7 +99,7 @@ for kr = 1:3  % three subregions
     cffp = polyfit(ty2y,wrk,1);
     anom = wrk-polyval(cffp,ty2y);
     [~,pv] = corr(ty2y(:),wrk(:));
-    text(tlims(1)+2.5,ylims(2)+(-0.02-0.09*(kv-1))*diff(ylims),...
+    text(tlims(1)+7.5,ylims(2)+(-0.02-0.09*(kv-1))*diff(ylims),...
          [num2str(std(anom),'std=%.2f') ...                     % std of residual
           num2str(cffp(1)  ,', trend=%.2f') ' year^{-1}' ...    % linear trend
           ' (\itp\rm' fun_pdesc(pv) ')'],...                    % p-value
@@ -116,8 +116,8 @@ for kr = 1:3  % three subregions
               'hor','cen','ver','bot','fontsize',fsize+0.5,'color',colors,'interpreter','latex'); end
     if kr==3&kv==1; xlabel('year'); end
   end
-  text(tlims(1)+0.03*diff(tlims),ylims(2)-0.04*diff(ylims),plabels{kr+3},...
-       'hor','lef','ver','top','fontsize',fsize+1,'fontweight','bold')
+  text(tlims(1)+0.03*diff(tlims),ylims(2)-0.04*diff(ylims),[plabels{kr+3} ' ' OUY.srnms{kr}],...
+       'hor','lef','ver','top','fontsize',fsize,'fontweight','bold')
 end
 
 %#################

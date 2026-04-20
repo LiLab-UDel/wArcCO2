@@ -7,7 +7,7 @@
 % The figure includes the following subpanels:
 %   - ECCO2 SSS validated against SOCAT for each year
 %
-%             Author: Tianyu Zhou and Yun Li, UDel, 11/23/2025
+%             Author: Tianyu Zhou and Yun Li, UDel, 03/21/2026
 
 clc; clear; close all; info_params
 %=====================================================
@@ -22,7 +22,7 @@ fgx = 0.03; fgw = 0.23; fgdw = fgw+0.01;
 fgy = 0.80; fgh = 0.16; fgdh = fgh+0.03;
 ylims = [16 35]; yticks = [16:3:40];
 ylims = ylims + 0.08*diff(ylims)*[-1 1];
-load(fcmap_pCO2dens); cmap = cmap([140:70:end 1 50],:); % color scheme of lines
+cmap = [0.9 0.4 0.2; 0.9 0.7 0.1];
 
 %###############
 %## load data ##
@@ -71,15 +71,17 @@ for kp = 1:length(years)
   hold on; grid on; box on
   for ke = 1:length(ewrk); txt = char(ewrk(ke)); txt = [txt(1:end-4) '*'];
     idd = find(tmp.Expocode==ewrk(ke));
-    ctxt=cmap(ke,:); istxt=1;
     if ismember(ywrk,[2003:2014 9915 2016 9917 9918 2020:2022]);
-      ctxt=cmap(1,:); istxt=0; end                           % use single color
+      ctxt=cmap(1,:); istxt=0;                               % use single color
+    else
+      ctxt=cmap(ke,:); istxt=1;
+    end
     if sum(~isnan(tmp.uSSS(idd)))==0; ctxt=[1 1 1]*0.7; end  % missing SSS
     plot(tmp.time(idd),tmp.SSS( idd),'.','markersize',msize,'color','k')
     plot(tmp.time(idd),tmp.uSSS(idd),'.','markersize',msize,'color',ctxt)
     if istxt                                                 % mark cruise ID
-      text(xlims(1)+(0.31+0.17*(ke-1))*diff(xlims),ylims(1)+0.04*diff(ylims),...
-           txt,'color',ctxt,'fontsize',fsize,'hor','lef','ver','bot'); end
+      text(xlims(1)+(0.35+0.19*(ke-1))*diff(xlims),ylims(1)+0.04*diff(ylims),...
+           txt,'color',ctxt,'fontsize',fsize,'fontweight','bold','hor','lef','ver','bot'); end
   end
   set(gca,'fontsize',fsize,...
       'xlim',xlims,'xtick',xticks,'xticklabel',xticklabels(:,2:end),...
@@ -91,8 +93,8 @@ for kp = 1:length(years)
        ['(' char('a'+kp-1) ') ' yrlabels(kp,:)],...
        'fontsize',fsize+1,'fontweight','bold','hor','left','ver','top')
   text(xlims(1)+0.03*diff(xlims),ylims(1)+0.04*diff(ylims),...
-       ['\itn\rm = ' num2str(size(tmp,1))],...
-       'fontsize',fsize,'hor','lef','ver','bot')
+       ['\itn\rm\bf = ' fun_ndesc(size(tmp,1))],...
+       'fontsize',fsize,'fontweight','bold','hor','lef','ver','bot')
 end
 
 %###################
