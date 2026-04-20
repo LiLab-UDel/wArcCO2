@@ -1,5 +1,5 @@
 # wArcCO2
-This repository contains the codes and data used to produce figures for _"Beyond Long-Term Changes: Interannual Variability of Carbon Uptake due to Sea Ice Loss in the Western Arctic Ocean"_ 
+This repository contains the codes and data used to produce figures for _"Interannual Variability of Oceanic Carbon Uptake Associated with Long-Term Sea-Ice Loss in the Western Arctic Ocean"_ 
 by T. Zhou (UDel), Y. Li (UDel), Z. Ouyang (UDel), P. Harmon (Penn State), and W.-J. Cai (UDel)
 
 __Contact information:__ The [Computational Oceanography Lab](https://sites.udel.edu/yunli/) led by Dr. Yun Li (yunli@udel.edu) at the University of Delaware
